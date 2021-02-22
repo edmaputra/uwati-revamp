@@ -3,4 +3,4 @@ spring:
     config:
       server:
         git:
-          uri: file://home/edmaputra/Project/uwati-revamp/uwati-api/config-repository
+          uri: file://home/edmaputra/Project/uwati-revamp-config-repository
