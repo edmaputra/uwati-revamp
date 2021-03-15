@@ -1,14 +1,11 @@
 package io.github.edmaputra.uwati.profile.entity
 
 import io.github.edmaputra.uwati.profile.enum.PersonType
-import java.util.*
-import javax.persistence.*
+import org.springframework.data.annotation.Id
 
-@Entity
 data class Person(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: UUID,
+    val id: String,
 
     val personId: String,
 
@@ -16,13 +13,11 @@ data class Person(
 
     val email: String,
 
-    @Enumerated(EnumType.STRING)
     val type: PersonType,
 
-    val address: String,
+    val address: Map<String, Any>,
 
     val phone: String,
 
-    @Lob
-    val metadata: String?
+    val metadata: Map<String, Any>
 )
