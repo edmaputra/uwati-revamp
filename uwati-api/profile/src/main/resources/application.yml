@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    config:
+      uri:
+        - http://localhost:10000
+  data:
+    mongodb:
+      host: localhost
+
+server:
+  port: 10010
