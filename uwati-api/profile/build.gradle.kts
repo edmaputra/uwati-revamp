@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.edmaputra.uwati"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.2-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -22,6 +22,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.cloud:spring-cloud-starter-config")
+
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.5.6")
+	implementation("org.springdoc:springdoc-openapi-webflux-ui:1.5.6")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
