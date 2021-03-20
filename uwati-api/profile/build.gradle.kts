@@ -23,9 +23,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.cloud:spring-cloud-starter-config")
 
-	implementation("org.springdoc:springdoc-openapi-kotlin:1.5.6")
-	implementation("org.springdoc:springdoc-openapi-webflux-ui:1.5.6")
-
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -44,12 +41,16 @@ dependencyManagement {
 }
 
 tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
-	}
+  kotlinOptions {
+    freeCompilerArgs = listOf("-Xjsr305=strict")
+    jvmTarget = "11"
+  }
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+  useJUnitPlatform()
+}
+
+configure<org.springframework.boot.gradle.dsl.SpringBootExtension> {
+  buildInfo()
 }
