@@ -1,10 +1,9 @@
-package io.github.edmaputra.uwati.profile.entity
+package io.github.edmaputra.uwati.profile.web.response
 
 import io.github.edmaputra.uwati.profile.enum.PersonType
-import org.springframework.data.annotation.Id
 
-data class Person(
-  @Id
+data class PersonResponse(
+
   val id: String,
 
   val personId: String,
@@ -20,4 +19,5 @@ data class Person(
   val phone: String,
 
   val metadata: Map<String, Any>
+
 )

@@ -4,4 +4,3 @@ spring:
       server:
         git:
           uri: file://${user.home}/Project/uwati-revamp-config-repository
-          clone-on-start: true

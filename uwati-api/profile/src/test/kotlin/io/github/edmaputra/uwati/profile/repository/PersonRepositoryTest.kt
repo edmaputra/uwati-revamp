@@ -15,9 +15,10 @@ class PersonRepositoryTest @Autowired constructor(
 
     @Test
     fun `when findAll then return all records`() {
+
         val person = Person(
             UUID.randomUUID().toString(), "ABC", "Bangun", "bangun@gmail.co", PersonType.SUPERUSER,
-            Collections.singletonMap("street", "abc"), "0121"
+            Collections.singletonMap("street", "abc"), "0121", Collections.singletonMap("street", "abc")
         )
 
         val result = repository.deleteAll()

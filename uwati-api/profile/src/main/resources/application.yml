@@ -1,11 +1,12 @@
 spring:
-  cloud:
-    config:
-      uri:
-        - http://localhost:10000
-  data:
-    mongodb:
-      host: localhost
+  application:
+    name: uwati-profile
+  profiles:
+    active: dev
+  config:
+    import: "optional:configserver:http://localhost:10000"
+  webflux:
+    base-path: "/api/profile/v0"
 
 server:
   port: 10010

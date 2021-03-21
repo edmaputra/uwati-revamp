@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class ProfileApplication
 
 fun main(args: Array<String>) {
-	runApplication<ProfileApplication>(*args)
+  runApplication<ProfileApplication>(*args)
 }
