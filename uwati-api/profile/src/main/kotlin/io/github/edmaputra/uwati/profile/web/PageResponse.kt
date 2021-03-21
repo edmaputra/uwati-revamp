@@ -2,11 +2,11 @@ package io.github.edmaputra.uwati.profile.web
 
 data class PageResponse<T>(
 
-    val content: T,
+  val content: T,
 
-    val pageNumber: Int,
+  val pageNumber: Int,
 
-    val totalPage: Int,
+  val totalPage: Int,
 
-    val totalItems: Int
+  val totalItems: Int
 )
