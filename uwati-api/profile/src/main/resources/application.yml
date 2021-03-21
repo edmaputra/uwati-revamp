@@ -5,6 +5,8 @@ spring:
     active: dev
   config:
     import: "optional:configserver:http://localhost:10000"
+  webflux:
+    base-path: "/api/profile/v0"
 
 server:
   port: 10010
