@@ -113,8 +113,17 @@ class PersonName extends StatefulWidget {
 }
 
 class _PersonNameState extends State<PersonName> {
+  final _suggestions = <Text>[];
+  final _biggerFont = TextStyle(fontSize: 18.0);
+
   @override
   Widget build(BuildContext context) {
     return Text('Bangun');
+  }
+
+  Widget _buildSuggestions() {
+    return ListView.builder(
+      padding: EdgeInsets.all(16.0),
+    )
   }
 }
