@@ -9,4 +9,4 @@ spring:
     base-path: "/api/profile/v0"
 
 server:
-  port: 10010
+  port: ${PROFILE_PORT:10010}
