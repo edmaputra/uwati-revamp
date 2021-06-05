@@ -1,7 +1,8 @@
 package io.github.edmaputra.uwati.profile.entity
 
 import io.github.edmaputra.uwati.profile.enum.PersonType
-import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.*
+import java.time.ZonedDateTime
 
 data class Person(
   @Id
@@ -19,5 +20,23 @@ data class Person(
 
   val phone: String,
 
-  val metadata: Map<String, Any>
+  val metadata: Map<String, Any>,
+
+  @CreatedBy
+  val createdBy: String = "",
+
+  @CreatedDate
+  val createdDateTime: Long = 0,
+
+  @LastModifiedBy
+  val modifiedBy: String = "",
+
+  @LastModifiedDate
+  val modifiedDateTime: Long = 0,
+
+  val deletedBy: String = "",
+
+  val deletedDateTime: Long = 0,
+
+  val deletedFlag: Boolean = false
 )

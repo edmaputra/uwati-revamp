@@ -2,6 +2,7 @@ package io.github.edmaputra.uwati.profile.service.impl
 
 import io.github.edmaputra.uwati.profile.entity.Person
 import io.github.edmaputra.uwati.profile.enum.PersonType
+import io.github.edmaputra.uwati.profile.repository.PersonRepository
 import io.github.edmaputra.uwati.profile.service.PersonService
 import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
 import io.github.edmaputra.uwati.profile.web.request.PersonUpdateRequest
@@ -12,7 +13,9 @@ import java.util.*
 import kotlin.collections.HashMap
 
 @Service
-class PersonServiceImpl : PersonService {
+class PersonServiceImpl(
+  private val repository: PersonRepository
+) : PersonService {
 
   override fun getAll(): Flux<Person> {
     return Flux.just(
@@ -30,34 +33,41 @@ class PersonServiceImpl : PersonService {
   }
 
   override fun getById(request: Mono<String>): Mono<Person> {
-    return request.map { r ->
-      Person(
-        UUID.randomUUID().toString(),
-        r,
-        "deleted",
-        "delete@mail.id",
-        PersonType.ADMINISTRATOR,
-        HashMap(),
-        "123123",
-        HashMap()
-      )
-    }
+    return repository.findById(request);
   }
 
   override fun create(request: Mono<PersonCreateRequest>): Mono<Person> {
-    return request.map { r ->
-      Person(
-        UUID.randomUUID().toString(),
-        "P-" + r.type + "-001",
-        r.name,
-        r.email,
-        r.type,
-        r.address,
-        r.phone,
-        r.metadata
+    return request.flatMap { request ->
+      Mono.just(
+        repository.save(
+          Person(
+            UUID.randomUUID().toString(),
+            "P-" + request.type + "-001",
+            request.name,
+            request.email,
+            request.type,
+            request.address,
+            request.phone,
+            request.metadata
+          )
+        )
       )
     }
+      .map { entity -> entity }
+//    return request.map { r ->
+//      Person(
+//        UUID.randomUUID().toString(),
+//        "P-" + r.type + "-001",
+//        r.name,
+//        r.email,
+//        r.type,
+//        r.address,
+//        r.phone,
+//        r.metadata
+//      )
+//    }
   }
+
 
   override fun update(request: Mono<PersonUpdateRequest>): Mono<Person> {
     return request.map { r ->
