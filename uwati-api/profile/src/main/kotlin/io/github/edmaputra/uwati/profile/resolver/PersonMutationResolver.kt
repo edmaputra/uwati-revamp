@@ -1,0 +1,18 @@
+package io.github.edmaputra.uwati.profile.resolver
+
+import graphql.kickstart.tools.GraphQLMutationResolver
+import io.github.edmaputra.uwati.profile.entity.Person
+import io.github.edmaputra.uwati.profile.enumeration.PersonType
+import io.github.edmaputra.uwati.profile.service.PersonService
+import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
+import org.springframework.stereotype.Component
+
+@Component
+class PersonMutationResolver(
+  private val service: PersonService
+) : GraphQLMutationResolver {
+
+  fun create(name: String, email: String, type: String, phone: String) : Person =
+    service.create(PersonCreateRequest(name, email, PersonType.ADMINISTRATOR, emptyMap(), phone, emptyMap()))
+
+}

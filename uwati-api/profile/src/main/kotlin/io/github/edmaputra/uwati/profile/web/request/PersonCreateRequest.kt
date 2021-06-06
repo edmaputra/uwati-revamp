@@ -1,6 +1,8 @@
 package io.github.edmaputra.uwati.profile.web.request
 
-import io.github.edmaputra.uwati.profile.enum.PersonType
+import io.github.edmaputra.uwati.profile.entity.Person
+import io.github.edmaputra.uwati.profile.enumeration.PersonType
+import org.bson.types.ObjectId
 
 data class PersonCreateRequest(
 
@@ -16,4 +18,17 @@ data class PersonCreateRequest(
 
   val metadata: Map<String, Any> = emptyMap()
 
-)
+) {
+  object ModelMapper {
+    fun toPerson(from: PersonCreateRequest) = Person(
+      ObjectId.get(),
+      "",
+      from.name,
+      from.email,
+      from.type,
+      from.address,
+      from.phone,
+      from.metadata
+    )
+  }
+}

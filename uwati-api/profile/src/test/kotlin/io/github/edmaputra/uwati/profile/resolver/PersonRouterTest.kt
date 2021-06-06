@@ -1,6 +1,6 @@
-package io.github.edmaputra.uwati.profile.router
+package io.github.edmaputra.uwati.profile.resolver
 
-import io.github.edmaputra.uwati.profile.enum.PersonType
+import io.github.edmaputra.uwati.profile.enumeration.PersonType
 import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
 import io.github.edmaputra.uwati.profile.web.request.PersonUpdateRequest
 import org.hamcrest.Matchers.containsInAnyOrder

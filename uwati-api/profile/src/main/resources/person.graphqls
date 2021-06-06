@@ -1,0 +1,33 @@
+#type Map {
+#  key: String
+#  value: String
+#}
+
+type Person {
+  id: ID!,
+
+  personId: String,
+
+  name: String,
+
+  email: String,
+
+  type: String,
+
+  phone: String
+  #
+  #   address: [Map],
+  #
+  #
+  #   metadata: [Map]
+}
+
+type Query {
+  persons: [Person]
+}
+
+type Mutation {
+  create(name: String!, email: String, type: String, phone: String) : Person
+#  update(id: ID!, name: String!, email: String, type: String, phone: String) : Person
+#  delete(id: ID!) : Boolean
+}

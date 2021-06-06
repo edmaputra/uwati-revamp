@@ -2,7 +2,7 @@ plugins {
   id("org.springframework.boot")
 }
 
-extra["springCloudVersion"] = "2020.0.1"
+extra["springCloudVersion"] = "2020.0.3"
 
 dependencyManagement {
   imports {
