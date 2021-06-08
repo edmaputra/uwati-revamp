@@ -17,7 +17,7 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-config")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+	testRuntimeOnly("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 }
 
 configure<org.springframework.boot.gradle.dsl.SpringBootExtension> {

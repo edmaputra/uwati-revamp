@@ -6,6 +6,7 @@ import io.github.edmaputra.uwati.profile.enumeration.PersonType
 import io.github.edmaputra.uwati.profile.service.PersonService
 import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
 import org.springframework.stereotype.Component
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @Component
 class PersonMutationResolver(
@@ -20,7 +21,7 @@ class PersonMutationResolver(
     "Pharmacist" to PersonType.PHARMACIST
   )
 
-  fun create(name: String, email: String, type: String, phone: String): Person =
-    service.create(PersonCreateRequest(name, email, personType[type], emptyMap(), phone, emptyMap()))
+  fun create(name: String, email: String, type: String, phone: String, address: Map<String, Any>): Person =
+    service.create(PersonCreateRequest(name, email, personType[type], address, phone, emptyMap()))
 
 }

@@ -34,7 +34,6 @@ class PersonServiceImpl(
         s.phone = request.phone
         s.metadata = request.metadata
         repository.save(s)
-        s
       }
       .orElseThrow { NotFoundException("Not Found") }
 
