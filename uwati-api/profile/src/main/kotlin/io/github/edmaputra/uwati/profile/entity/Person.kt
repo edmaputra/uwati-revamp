@@ -14,7 +14,7 @@ data class Person(
 
   var email: String,
 
-  var type: PersonType,
+  var type: PersonType? = PersonType.CASHIER,
 
   var address: Map<String, Any>,
 

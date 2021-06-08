@@ -48,7 +48,8 @@ subprojects {
     "compile"("com.graphql-java-kickstart:graphql-java-tools:11.0.1")
 
     "testCompile"("com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.0.0")
-
+    "testImplementation"("org.testcontainers:testcontainers:1.12.3")
+    "testImplementation"("org.testcontainers:junit-jupiter:1.12.3")
   }
 
   tasks.withType<Test> {

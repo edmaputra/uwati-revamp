@@ -12,7 +12,15 @@ class PersonMutationResolver(
   private val service: PersonService
 ) : GraphQLMutationResolver {
 
-  fun create(name: String, email: String, type: String, phone: String) : Person =
-    service.create(PersonCreateRequest(name, email, PersonType.ADMINISTRATOR, emptyMap(), phone, emptyMap()))
+  val personType = mapOf(
+    "Administrator" to PersonType.ADMINISTRATOR,
+    "Cashier" to PersonType.CASHIER,
+    "Doctor" to PersonType.DOCTOR,
+    "SuperUser" to PersonType.SUPERUSER,
+    "Pharmacist" to PersonType.PHARMACIST
+  )
+
+  fun create(name: String, email: String, type: String, phone: String): Person =
+    service.create(PersonCreateRequest(name, email, personType[type], emptyMap(), phone, emptyMap()))
 
 }

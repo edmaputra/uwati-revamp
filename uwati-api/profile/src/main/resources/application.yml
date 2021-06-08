@@ -13,3 +13,7 @@ spring:
 
 server:
   port: ${PROFILE_PORT:10010}
+
+graphql:
+  tools:
+    schema-location-pattern: "**/graphqls/*.graphqls"
