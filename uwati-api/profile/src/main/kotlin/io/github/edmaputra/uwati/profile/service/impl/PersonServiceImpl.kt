@@ -8,6 +8,7 @@ import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
 import io.github.edmaputra.uwati.profile.web.request.PersonUpdateRequest
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
+import java.time.ZonedDateTime
 
 @Service
 class PersonServiceImpl(
@@ -29,10 +30,11 @@ class PersonServiceImpl(
     repository.findById(request.id)
       .map{ s ->
         s.name = request.name
-        s.email = request.name
+        s.email = request.email
         s.address = request.address
         s.phone = request.phone
         s.metadata = request.metadata
+        s.modifiedDateTime = ZonedDateTime.now().toEpochSecond()
         repository.save(s)
       }
       .orElseThrow { NotFoundException("Not Found") }
