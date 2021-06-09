@@ -49,6 +49,7 @@ internal class PersonMutationTest {
     assertThat(parsedResponse.get("data")).isNotNull
     assertThat(parsedResponse.get("data").get("create").get("id")).isNotNull
     assertThat(parsedResponse.get("data").get("create").get("name").textValue()).isEqualTo("Bangun")
+    assertThat(parsedResponse.get("data").get("create").get("personId").textValue()).isEqualTo("ADM-00001")
     println(parsedResponse.get("data").get("create"))
   }
 }

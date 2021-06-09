@@ -22,6 +22,6 @@ class PersonMutationResolver(
   )
 
   fun create(name: String, email: String, type: String, phone: String, address: Map<String, Any>): Person =
-    service.create(PersonCreateRequest(name, email, personType[type], address, phone, emptyMap()))
+    service.create(PersonCreateRequest(name, email, personType[type]!!, address, phone, emptyMap()))
 
 }

@@ -19,10 +19,11 @@ class PersonServiceImpl(
   override fun getById(request: ObjectId): Person =
     repository.findById(request).orElseThrow { NotFoundException("Not Found") }
 
-  override fun create(request: PersonCreateRequest): Person =
-    repository.save(
-      PersonCreateRequest.ModelMapper.toPerson(request)
-    )
+  override fun create(request: PersonCreateRequest): Person {
+    val person = PersonCreateRequest.ModelMapper.toPerson(request)
+    person.personId = generatePersonId(request)
+    return repository.save(person)
+  }
 
   override fun update(request: PersonUpdateRequest): Person =
     repository.findById(request.id)
@@ -30,7 +31,6 @@ class PersonServiceImpl(
         s.name = request.name
         s.email = request.name
         s.address = request.address
-        s.type = request.type
         s.phone = request.phone
         s.metadata = request.metadata
         repository.save(s)
@@ -39,4 +39,14 @@ class PersonServiceImpl(
 
 
   override fun delete(request: ObjectId) = repository.deleteById(request)
+
+  private fun generatePersonId(request: PersonCreateRequest): String {
+    val savedPerson = repository.findFirstByTypeOrderByCreatedDateTimeDesc(request.type)
+    return if (savedPerson.isPresent) {
+      val sequenceNumber = savedPerson.get().personId.substring(savedPerson.get().personId.length - 5)
+      request.type.v + "-" + String.format("%05d", (Integer.valueOf(sequenceNumber) + 1))
+    } else {
+      request.type.v + "-00001"
+    }
+  }
 }

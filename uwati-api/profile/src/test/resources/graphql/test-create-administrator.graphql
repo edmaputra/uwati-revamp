@@ -1,6 +1,7 @@
 mutation {
   create(name: "Bangun", email: "bangun@mail.go", type: "Administrator", phone: "123456", address: {key: "street", value: "cigending"}) {
     id,
+    personId,
     name,
     email,
     type,

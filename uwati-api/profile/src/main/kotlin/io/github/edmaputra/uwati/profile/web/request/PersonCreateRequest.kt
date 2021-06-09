@@ -10,7 +10,7 @@ data class PersonCreateRequest(
 
   val email: String = "",
 
-  val type: PersonType? = PersonType.ADMINISTRATOR,
+  val type: PersonType = PersonType.ADMINISTRATOR,
 
   val address: Map<String, Any> = emptyMap(),
 
@@ -20,6 +20,7 @@ data class PersonCreateRequest(
 
 ) {
   object ModelMapper {
+
     fun toPerson(from: PersonCreateRequest) = Person(
       ObjectId.get(),
       "",
