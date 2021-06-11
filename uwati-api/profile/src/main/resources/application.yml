@@ -10,5 +10,7 @@ server:
   port: ${PROFILE_PORT:10010}
 
 graphql:
+  servlet:
+    exception-handlers-enabled: true
   tools:
     schema-location-pattern: "**/graphqls/*.graphqls"

@@ -1,7 +1,7 @@
 package io.github.edmaputra.uwati.profile.service.impl
 
 import io.github.edmaputra.uwati.profile.entity.Person
-import io.github.edmaputra.uwati.profile.error.NotFoundException
+import io.github.edmaputra.uwati.profile.exception.NotFoundException
 import io.github.edmaputra.uwati.profile.repository.PersonRepository
 import io.github.edmaputra.uwati.profile.service.PersonService
 import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
@@ -28,7 +28,7 @@ class PersonServiceImpl(
 
   override fun update(request: PersonUpdateRequest): Person =
     repository.findById(request.id)
-      .map{ s ->
+      .map { s ->
         s.name = request.name
         s.email = request.email
         s.address = request.address
@@ -37,7 +37,7 @@ class PersonServiceImpl(
         s.modifiedDateTime = ZonedDateTime.now().toEpochSecond()
         repository.save(s)
       }
-      .orElseThrow { NotFoundException("Not Found") }
+      .orElseThrow { NotFoundException("Record with id ${request.id} cannot be found") }
 
 
   override fun delete(request: ObjectId) = repository.deleteById(request)
