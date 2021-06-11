@@ -28,5 +28,14 @@ class PersonMutationResolver(
   fun update(id: ObjectId, name: String, email: String, phone: String, address: Map<String, Any>): Person =
     service.update(PersonUpdateRequest(id, name, email, address, phone, emptyMap()))
 
+  fun delete(id: ObjectId, hardDelete: Boolean): ObjectId {
+    if (hardDelete) {
+      service.hardDelete(id)
+    } else {
+      service.delete(id)
+    }
+    return id
+  }
+
 
 }

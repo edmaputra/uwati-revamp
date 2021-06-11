@@ -15,7 +15,7 @@ class PersonServiceImpl(
   private val repository: PersonRepository
 ) : PersonService {
 
-  override fun findAll(): List<Person> = repository.findAll()
+  override fun findAll(): List<Person> = repository.findByDeletedFlagIsFalse()
 
   override fun getById(request: ObjectId): Person =
     repository.findById(request).orElseThrow { NotFoundException("Not Found") }
@@ -28,19 +28,30 @@ class PersonServiceImpl(
 
   override fun update(request: PersonUpdateRequest): Person =
     repository.findById(request.id)
-      .map { s ->
-        s.name = request.name
-        s.email = request.email
-        s.address = request.address
-        s.phone = request.phone
-        s.metadata = request.metadata
-        s.modifiedDateTime = ZonedDateTime.now().toEpochSecond()
-        repository.save(s)
+      .map { saved ->
+        updateValue(request, saved)
+        saved.modifiedDateTime = ZonedDateTime.now().toEpochSecond()
+        repository.save(saved)
       }
       .orElseThrow { NotFoundException("Record with id ${request.id} cannot be found") }
 
 
-  override fun delete(request: ObjectId) = repository.deleteById(request)
+  override fun delete(id: ObjectId) {
+    val personToBeDeleted = getById(id)
+    personToBeDeleted.deletedDateTime = ZonedDateTime.now().toEpochSecond()
+    personToBeDeleted.deletedFlag = true
+    repository.save(personToBeDeleted)
+  }
+
+  override fun hardDelete(id: ObjectId) = repository.deleteById(id)
+
+  private fun updateValue(source: PersonUpdateRequest, target: Person) {
+    target.name = source.name
+    target.email = source.email
+    target.address = source.address
+    target.phone = source.phone
+    target.metadata = source.metadata
+  }
 
   private fun generatePersonId(request: PersonCreateRequest): String {
     val savedPerson = repository.findFirstByTypeOrderByCreatedDateTimeDesc(request.type)

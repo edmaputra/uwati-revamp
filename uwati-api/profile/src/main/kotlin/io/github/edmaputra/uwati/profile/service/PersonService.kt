@@ -4,8 +4,6 @@ import io.github.edmaputra.uwati.profile.entity.Person
 import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
 import io.github.edmaputra.uwati.profile.web.request.PersonUpdateRequest
 import org.bson.types.ObjectId
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 
 interface PersonService {
 
@@ -17,6 +15,8 @@ interface PersonService {
 
   fun update(request: PersonUpdateRequest): Person
 
-  fun delete(request: ObjectId)
+  fun delete(id: ObjectId)
+
+  fun hardDelete(id: ObjectId)
 
 }
