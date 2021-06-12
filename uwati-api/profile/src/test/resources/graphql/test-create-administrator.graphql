@@ -1,10 +1,19 @@
 mutation {
-  create(name: "Bangun", email: "bangun@mail.go", type: "Administrator", phone: "123456", address: {key: "street", value: "cigending"}) {
+  create(name: "Bangun", email: "bangun@mail.go", type: "Administrator", phone: "123456",
+    address: [{key: "street", value: "cigending"}, {key: "town", value: "Bandung"}],
+    metadata: [{key: "k", value: "val"}]
+  ) {
     id,
     personId,
     name,
     email,
     type,
-    phone
+    phone,
+    address {
+      key, value
+    },
+    metadata {
+      key, value
+    }
   }
 }

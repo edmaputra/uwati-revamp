@@ -1,5 +1,6 @@
 package io.github.edmaputra.uwati.profile.request
 
+import io.github.edmaputra.uwati.profile.common.MapEntry
 import io.github.edmaputra.uwati.profile.entity.Person
 import io.github.edmaputra.uwati.profile.enumeration.PersonType
 import org.bson.types.ObjectId
@@ -12,11 +13,11 @@ data class PersonCreateRequest(
 
   val type: PersonType = PersonType.ADMINISTRATOR,
 
-  val address: Map<String, Any> = emptyMap(),
+  val address: List<MapEntry> = emptyList(),
 
   val phone: String = "",
 
-  val metadata: Map<String, Any> = emptyMap()
+  val metadata: List<MapEntry> = emptyList()
 
 ) {
   object ModelMapper {
@@ -26,9 +27,9 @@ data class PersonCreateRequest(
       "",
       from.name,
       from.email,
+      from.phone,
       from.type,
       from.address,
-      from.phone,
       from.metadata
     )
   }

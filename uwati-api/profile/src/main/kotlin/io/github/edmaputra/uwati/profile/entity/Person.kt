@@ -1,27 +1,31 @@
 package io.github.edmaputra.uwati.profile.entity
 
+import io.github.edmaputra.uwati.profile.common.MapEntry
 import io.github.edmaputra.uwati.profile.enumeration.PersonType
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.*
+import org.springframework.data.mongodb.core.index.Indexed
 import java.time.ZonedDateTime
 
 data class Person(
   @Id
   var id: ObjectId,
 
+  @Indexed(unique = true)
   var personId: String,
 
   var name: String,
 
+  @Indexed(unique = true)
   var email: String,
-
-  var type: PersonType = PersonType.CASHIER,
-
-  var address: Map<String, Any>,
 
   var phone: String,
 
-  var metadata: Map<String, Any>,
+  var type: PersonType = PersonType.CASHIER,
+
+  var address: List<MapEntry>,
+
+  var metadata: List<MapEntry> = emptyList(),
 
   @CreatedBy
   var createdBy: String = "",

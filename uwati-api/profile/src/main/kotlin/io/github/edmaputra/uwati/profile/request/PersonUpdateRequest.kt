@@ -1,5 +1,6 @@
 package io.github.edmaputra.uwati.profile.request
 
+import io.github.edmaputra.uwati.profile.common.MapEntry
 import org.bson.types.ObjectId
 
 data class PersonUpdateRequest(
@@ -10,10 +11,10 @@ data class PersonUpdateRequest(
 
   val email: String = "",
 
-  val address: Map<String, Any> = emptyMap(),
+  val address: List<MapEntry>,
 
   val phone: String = "",
 
-  val metadata: Map<String, Any> = emptyMap()
+  val metadata: List<MapEntry> = emptyList()
 
 )
