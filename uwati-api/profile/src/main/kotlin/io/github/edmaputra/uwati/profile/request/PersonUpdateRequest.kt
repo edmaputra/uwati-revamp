@@ -11,9 +11,9 @@ data class PersonUpdateRequest(
 
   val email: String = "",
 
-  val address: List<MapEntry>,
-
   val phone: String = "",
+
+  val address: List<MapEntry>,
 
   val metadata: List<MapEntry> = emptyList()
 

@@ -11,13 +11,15 @@ data class PersonCreateRequest(
 
   val email: String = "",
 
+  val phone: String = "",
+
   val type: PersonType = PersonType.ADMINISTRATOR,
 
   val address: List<MapEntry> = emptyList(),
 
-  val phone: String = "",
+  val metadata: List<MapEntry> = emptyList(),
 
-  val metadata: List<MapEntry> = emptyList()
+  val username: String = ""
 
 ) {
   object ModelMapper {
@@ -30,7 +32,8 @@ data class PersonCreateRequest(
       from.phone,
       from.type,
       from.address,
-      from.metadata
+      from.metadata,
+      from.username
     )
   }
 }

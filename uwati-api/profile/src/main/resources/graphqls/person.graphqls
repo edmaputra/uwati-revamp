@@ -6,7 +6,8 @@ type Person {
   type: String,
   phone: String,
   address: [Map],
-  metadata: [Map]
+  metadata: [Map],
+  username: String
 }
 
 type Query {
@@ -14,9 +15,26 @@ type Query {
 }
 
 type Mutation {
-  create(name: String!, email: String, type: String, phone: String, address: [MapInput], metadata: [MapInput]) : Person
-  update(id: ID!, name: String!, email: String, phone: String, address: [MapInput], metadata: [MapInput]) : Person
-  delete(id: ID!, hardDelete: Boolean) : String
+  create(
+    name: String!,
+    email: String,
+    phone: String,
+    type: String,
+    address: [MapInput],
+    metadata: [MapInput],
+    username: String!) : Person
+
+  update(
+    id: ID!,
+    name: String!,
+    email: String,
+    phone: String,
+    address: [MapInput],
+    metadata: [MapInput]) : Person
+
+  delete(
+    id: ID!,
+    hardDelete: Boolean) : String
 }
 
 type Map {

@@ -26,12 +26,13 @@ class PersonMutationResolver(
   fun create(
     name: String,
     email: String,
-    type: String,
     phone: String,
+    type: String,
     address: List<MapEntry>,
-    metadata: List<MapEntry>
+    metadata: List<MapEntry>,
+    username: String
   ): Person =
-    service.create(PersonCreateRequest(name, email, personType[type]!!, address, phone, metadata))
+    service.create(PersonCreateRequest(name, email, phone, personType[type]!!, address, metadata, username))
 
   fun update(
     id: ObjectId,
@@ -41,7 +42,7 @@ class PersonMutationResolver(
     address: List<MapEntry>,
     metadata: List<MapEntry>
   ): Person =
-    service.update(PersonUpdateRequest(id, name, email, address, phone, metadata))
+    service.update(PersonUpdateRequest(id, name, email, phone, address, metadata))
 
   fun delete(id: ObjectId, hardDelete: Boolean): ObjectId {
     if (hardDelete) {

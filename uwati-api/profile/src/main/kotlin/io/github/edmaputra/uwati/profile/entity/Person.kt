@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.index.Indexed
 import java.time.ZonedDateTime
 
 data class Person(
+
   @Id
   var id: ObjectId,
 
@@ -26,6 +27,9 @@ data class Person(
   var address: List<MapEntry>,
 
   var metadata: List<MapEntry> = emptyList(),
+
+  @Indexed(unique = true)
+  val username: String,
 
   @CreatedBy
   var createdBy: String = "",
