@@ -2,9 +2,9 @@ package io.github.edmaputra.uwati.profile.service.impl
 
 import io.github.edmaputra.uwati.profile.entity.Person
 import io.github.edmaputra.uwati.profile.exception.NotFoundException
+import io.github.edmaputra.uwati.profile.input.PersonCreateInput
+import io.github.edmaputra.uwati.profile.input.PersonUpdateInput
 import io.github.edmaputra.uwati.profile.repository.PersonRepository
-import io.github.edmaputra.uwati.profile.request.PersonCreateRequest
-import io.github.edmaputra.uwati.profile.request.PersonUpdateRequest
 import io.github.edmaputra.uwati.profile.service.PersonService
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
@@ -20,20 +20,20 @@ class PersonServiceImpl(
   override fun getById(id: ObjectId): Person =
     repository.findById(id).orElseThrow { NotFoundException("Not Found") }
 
-  override fun create(request: PersonCreateRequest): Person {
-    val person = PersonCreateRequest.ModelMapper.toPerson(request)
-    person.personId = generatePersonId(request)
+  override fun create(input: PersonCreateInput): Person {
+    val person = PersonCreateInput.ModelMapper.toPerson(input)
+    person.personId = generatePersonId(person)
     return repository.save(person)
   }
 
-  override fun update(request: PersonUpdateRequest): Person =
-    repository.findById(request.id)
+  override fun update(input: PersonUpdateInput): Person =
+    repository.findById(input.id)
       .map { saved ->
-        updateValue(request, saved)
+        updateValue(input, saved)
         saved.modifiedDateTime = ZonedDateTime.now().toEpochSecond()
         repository.save(saved)
       }
-      .orElseThrow { NotFoundException("Record with id ${request.id} cannot be found") }
+      .orElseThrow { NotFoundException("Record with id ${input.id} cannot be found") }
 
 
   override fun delete(id: ObjectId) {
@@ -45,7 +45,7 @@ class PersonServiceImpl(
 
   override fun hardDelete(id: ObjectId) = repository.deleteById(id)
 
-  private fun updateValue(source: PersonUpdateRequest, target: Person) {
+  private fun updateValue(source: PersonUpdateInput, target: Person) {
     target.name = source.name
     target.email = source.email
     target.address = source.address
@@ -53,13 +53,13 @@ class PersonServiceImpl(
     target.metadata = source.metadata
   }
 
-  private fun generatePersonId(request: PersonCreateRequest): String {
-    val savedPerson = repository.findFirstByTypeOrderByCreatedDateTimeDesc(request.type)
+  private fun generatePersonId(person: Person): String {
+    val savedPerson = repository.findFirstByTypeOrderByCreatedDateTimeDesc(person.type)
     return if (savedPerson.isPresent) {
       val sequenceNumber = savedPerson.get().personId.substring(savedPerson.get().personId.length - 5)
-      request.type.v + "-" + String.format("%05d", (Integer.valueOf(sequenceNumber) + 1))
+      person.type.v + "-" + String.format("%05d", (Integer.valueOf(sequenceNumber) + 1))
     } else {
-      request.type.v + "-00001"
+      person.type.v + "-00001"
     }
   }
 }

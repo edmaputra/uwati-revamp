@@ -14,27 +14,38 @@ type Query {
   persons: [Person]
 }
 
+input PersonCreateInput {
+  name: String!,
+  email: String,
+  phone: String,
+  type: String,
+  address: [MapInput],
+  metadata: [MapInput],
+  username: String!
+}
+
+input PersonUpdateInput {
+  id: ID!,
+  name: String!,
+  email: String,
+  phone: String,
+  address: [MapInput],
+  metadata: [MapInput]
+}
+
+input PersonDeleteInput {
+  id: ID!,
+  hardDelete: Boolean
+}
+
 type Mutation {
-  create(
-    name: String!,
-    email: String,
-    phone: String,
-    type: String,
-    address: [MapInput],
-    metadata: [MapInput],
-    username: String!) : Person
 
-  update(
-    id: ID!,
-    name: String!,
-    email: String,
-    phone: String,
-    address: [MapInput],
-    metadata: [MapInput]) : Person
+  create(createInput: PersonCreateInput) : Person
 
-  delete(
-    id: ID!,
-    hardDelete: Boolean) : String
+  update(updateInput: PersonUpdateInput) : Person
+
+  delete(deleteInput: PersonDeleteInput) : String
+
 }
 
 type Map {

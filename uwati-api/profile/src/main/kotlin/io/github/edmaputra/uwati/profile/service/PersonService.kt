@@ -1,8 +1,8 @@
 package io.github.edmaputra.uwati.profile.service
 
 import io.github.edmaputra.uwati.profile.entity.Person
-import io.github.edmaputra.uwati.profile.request.PersonCreateRequest
-import io.github.edmaputra.uwati.profile.request.PersonUpdateRequest
+import io.github.edmaputra.uwati.profile.input.PersonCreateInput
+import io.github.edmaputra.uwati.profile.input.PersonUpdateInput
 import org.bson.types.ObjectId
 
 interface PersonService {
@@ -11,9 +11,9 @@ interface PersonService {
 
   fun getById(id: ObjectId): Person
 
-  fun create(request: PersonCreateRequest): Person
+  fun create(input: PersonCreateInput): Person
 
-  fun update(request: PersonUpdateRequest): Person
+  fun update(input: PersonUpdateInput): Person
 
   fun delete(id: ObjectId)
 
