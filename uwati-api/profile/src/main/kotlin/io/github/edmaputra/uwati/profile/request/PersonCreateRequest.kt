@@ -1,4 +1,4 @@
-package io.github.edmaputra.uwati.profile.web.request
+package io.github.edmaputra.uwati.profile.request
 
 import io.github.edmaputra.uwati.profile.entity.Person
 import io.github.edmaputra.uwati.profile.enumeration.PersonType

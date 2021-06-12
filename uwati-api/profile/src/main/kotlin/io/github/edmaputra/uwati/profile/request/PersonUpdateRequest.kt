@@ -1,4 +1,4 @@
-package io.github.edmaputra.uwati.profile.web.request
+package io.github.edmaputra.uwati.profile.request
 
 import org.bson.types.ObjectId
 

@@ -3,9 +3,9 @@ package io.github.edmaputra.uwati.profile.resolver
 import graphql.kickstart.tools.GraphQLMutationResolver
 import io.github.edmaputra.uwati.profile.entity.Person
 import io.github.edmaputra.uwati.profile.enumeration.PersonType
+import io.github.edmaputra.uwati.profile.request.PersonCreateRequest
+import io.github.edmaputra.uwati.profile.request.PersonUpdateRequest
 import io.github.edmaputra.uwati.profile.service.PersonService
-import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
-import io.github.edmaputra.uwati.profile.web.request.PersonUpdateRequest
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Component
 

@@ -5,10 +5,6 @@ mutation {
     name,
     email,
     type,
-    phone,
-    address {
-      key,
-      value
-    }
+    phone
   }
 }

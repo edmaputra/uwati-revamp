@@ -5,7 +5,7 @@ type Person {
   email: String,
   type: String,
   phone: String,
-  address: MapEntry
+  address: Map
 #
 #  metadata: [KeyValueMap]
 }
@@ -15,17 +15,17 @@ type Query {
 }
 
 type Mutation {
-  create(name: String!, email: String, type: String, phone: String, address: Map) : Person
-  update(id: ID!, name: String!, email: String, phone: String, address: Map) : Person
+  create(name: String!, email: String, type: String, phone: String, address: MapInput) : Person
+  update(id: ID!, name: String!, email: String, phone: String, address: MapInput) : Person
   delete(id: ID!, hardDelete: Boolean) : String
 }
 
-type MapEntry {
+type Map {
   key: String!
   value: String!
 }
 
-input Map {
+input MapInput {
   key: String!
   value: String!
 }

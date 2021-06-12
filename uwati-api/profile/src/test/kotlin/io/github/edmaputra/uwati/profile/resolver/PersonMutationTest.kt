@@ -4,11 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode
 import io.github.edmaputra.uwati.profile.util.GraphQLTestUtility
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.*
@@ -31,7 +29,7 @@ internal class PersonMutationTest {
   private lateinit var createAdministratorPayload: String
 
   @Test
-  fun `create thing should succeed when the input is valid`() {
+  fun `create new person should succeed when the input is valid`() {
     val payload = graphQLTestUtility.createJsonQuery(createAdministratorPayload)
 
     val headers = HttpHeaders()

@@ -3,9 +3,9 @@ package io.github.edmaputra.uwati.profile.service.impl
 import io.github.edmaputra.uwati.profile.entity.Person
 import io.github.edmaputra.uwati.profile.exception.NotFoundException
 import io.github.edmaputra.uwati.profile.repository.PersonRepository
+import io.github.edmaputra.uwati.profile.request.PersonCreateRequest
+import io.github.edmaputra.uwati.profile.request.PersonUpdateRequest
 import io.github.edmaputra.uwati.profile.service.PersonService
-import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
-import io.github.edmaputra.uwati.profile.web.request.PersonUpdateRequest
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 import java.time.ZonedDateTime
@@ -17,8 +17,8 @@ class PersonServiceImpl(
 
   override fun findAll(): List<Person> = repository.findByDeletedFlagIsFalse()
 
-  override fun getById(request: ObjectId): Person =
-    repository.findById(request).orElseThrow { NotFoundException("Not Found") }
+  override fun getById(id: ObjectId): Person =
+    repository.findById(id).orElseThrow { NotFoundException("Not Found") }
 
   override fun create(request: PersonCreateRequest): Person {
     val person = PersonCreateRequest.ModelMapper.toPerson(request)
