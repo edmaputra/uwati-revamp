@@ -7,6 +7,8 @@ import io.github.edmaputra.uwati.profile.input.PersonUpdateInput
 import io.github.edmaputra.uwati.profile.repository.PersonRepository
 import io.github.edmaputra.uwati.profile.service.PersonService
 import org.bson.types.ObjectId
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.ZonedDateTime
 
@@ -16,6 +18,8 @@ class PersonServiceImpl(
 ) : PersonService {
 
   override fun findAll(): List<Person> = repository.findByDeletedFlagIsFalse()
+
+  override fun findAll(pageable: Pageable): Page<Person> = repository.findByDeletedFlagIsFalse(pageable)
 
   override fun getById(id: ObjectId): Person =
     repository.findById(id).orElseThrow { NotFoundException("Not Found") }

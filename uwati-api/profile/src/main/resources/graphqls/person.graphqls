@@ -12,6 +12,7 @@ type Person {
 
 type Query {
   persons: [Person]
+  personsPageable(page: Int = 0, size: Int = 20): [Person]
 }
 
 input PersonCreateInput {
