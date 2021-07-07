@@ -12,6 +12,5 @@ dependencyManagement {
 
 dependencies {
   implementation("org.springframework.cloud:spring-cloud-config-server")
-  implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
