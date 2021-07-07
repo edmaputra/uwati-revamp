@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   idea
-  kotlin("jvm") version "1.5.10" apply false
-  kotlin("plugin.spring") version "1.5.10" apply false
-  id("org.springframework.boot") version "2.5.0" apply false
+  kotlin("jvm") version "1.4.32" apply false
+  kotlin("plugin.spring") version "1.4.32" apply false
+  id("org.springframework.boot") version "2.4.6" apply false
   id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
 }
 
@@ -42,6 +42,12 @@ subprojects {
     "implementation"("io.projectreactor.kotlin:reactor-kotlin-extensions")
     "implementation"("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    "implementation"("com.graphql-java-kickstart:graphql-spring-boot-starter:11.0.0")
+    "implementation"("com.graphql-java-kickstart:graphiql-spring-boot-starter:11.0.0")
+    "compile"("com.graphql-java-kickstart:graphql-java-tools:11.0.1")
+
+    "testCompile"("com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.0.0")
   }
 
   tasks.withType<Test> {

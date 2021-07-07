@@ -5,8 +5,12 @@ spring:
     active: dev
   config:
     import: "optional:configserver:http://localhost:10000"
-  webflux:
-    base-path: "/api/profile/v0"
 
 server:
   port: ${PROFILE_PORT:10010}
+
+graphql:
+  servlet:
+    exception-handlers-enabled: true
+  tools:
+    schema-location-pattern: "**/graphqls/*.graphqls"

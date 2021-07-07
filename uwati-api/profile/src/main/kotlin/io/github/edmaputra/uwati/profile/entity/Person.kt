@@ -1,42 +1,51 @@
 package io.github.edmaputra.uwati.profile.entity
 
-import io.github.edmaputra.uwati.profile.enum.PersonType
+import io.github.edmaputra.uwati.profile.common.MapEntry
+import io.github.edmaputra.uwati.profile.enumeration.PersonType
+import org.bson.types.ObjectId
 import org.springframework.data.annotation.*
+import org.springframework.data.mongodb.core.index.Indexed
 import java.time.ZonedDateTime
 
 data class Person(
+
   @Id
-  val id: String,
+  var id: ObjectId,
 
-  val personId: String,
+  @Indexed(unique = true)
+  var personId: String,
 
-  val name: String,
+  var name: String,
 
-  val email: String,
+  @Indexed(unique = true)
+  var email: String,
 
-  val type: PersonType,
+  var phone: String,
 
-  val address: Map<String, Any>,
+  var type: PersonType = PersonType.CASHIER,
 
-  val phone: String,
+  var address: List<MapEntry>,
 
-  val metadata: Map<String, Any>,
+  var metadata: List<MapEntry> = emptyList(),
+
+  @Indexed(unique = true)
+  val username: String,
 
   @CreatedBy
-  val createdBy: String = "",
+  var createdBy: String = "",
 
   @CreatedDate
-  val createdDateTime: Long = 0,
+  var createdDateTime: Long = ZonedDateTime.now().toEpochSecond(),
 
   @LastModifiedBy
-  val modifiedBy: String = "",
+  var modifiedBy: String = "",
 
   @LastModifiedDate
-  val modifiedDateTime: Long = 0,
+  var modifiedDateTime: Long = ZonedDateTime.now().toEpochSecond(),
 
-  val deletedBy: String = "",
+  var deletedBy: String = "",
 
-  val deletedDateTime: Long = 0,
+  var deletedDateTime: Long = 0,
 
-  val deletedFlag: Boolean = false
+  var deletedFlag: Boolean = false
 )

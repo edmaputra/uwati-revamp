@@ -2,7 +2,7 @@ plugins {
   id("org.springframework.boot")
 }
 
-extra["springCloudVersion"] = "2020.0.1"
+extra["springCloudVersion"] = "2020.0.3"
 
 dependencyManagement {
   imports {
@@ -14,10 +14,12 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
   implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.springframework.cloud:spring-cloud-starter-config")
+  implementation("org.springframework.boot:spring-boot-starter-validation")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+  implementation("org.springframework.cloud:spring-cloud-starter-config")
+
+  testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testRuntimeOnly("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 }
 
 configure<org.springframework.boot.gradle.dsl.SpringBootExtension> {

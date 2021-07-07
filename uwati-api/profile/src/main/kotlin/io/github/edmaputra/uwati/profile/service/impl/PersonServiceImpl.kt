@@ -1,101 +1,69 @@
 package io.github.edmaputra.uwati.profile.service.impl
 
 import io.github.edmaputra.uwati.profile.entity.Person
-import io.github.edmaputra.uwati.profile.enum.PersonType
+import io.github.edmaputra.uwati.profile.exception.NotFoundException
+import io.github.edmaputra.uwati.profile.input.PersonCreateInput
+import io.github.edmaputra.uwati.profile.input.PersonUpdateInput
 import io.github.edmaputra.uwati.profile.repository.PersonRepository
 import io.github.edmaputra.uwati.profile.service.PersonService
-import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
-import io.github.edmaputra.uwati.profile.web.request.PersonUpdateRequest
+import org.bson.types.ObjectId
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
-import java.util.*
-import kotlin.collections.HashMap
+import java.time.ZonedDateTime
 
 @Service
 class PersonServiceImpl(
   private val repository: PersonRepository
 ) : PersonService {
 
-  override fun getAll(): Flux<Person> {
-    return Flux.just(
-      Person(
-        UUID.randomUUID().toString(),
-        "ABC",
-        "Bangun",
-        "bangun@gmail.co",
-        PersonType.SUPERUSER,
-        Collections.singletonMap("street", "abc"),
-        "0121",
-        Collections.singletonMap("street", "abc")
-      )
-    )
+  override fun findAll(): List<Person> = repository.findByDeletedFlagIsFalse()
+
+  override fun findAll(pageable: Pageable): Page<Person> = repository.findByDeletedFlagIsFalse(pageable)
+
+  override fun getById(id: ObjectId): Person =
+    repository.findById(id).orElseThrow { NotFoundException("Not Found") }
+
+  override fun create(input: PersonCreateInput): Person {
+    val person = PersonCreateInput.ModelMapper.toPerson(input)
+    person.personId = generatePersonId(person)
+    return repository.save(person)
   }
 
-  override fun getById(request: Mono<String>): Mono<Person> {
-    return repository.findById(request);
+  override fun update(input: PersonUpdateInput): Person =
+    repository.findById(input.id)
+      .map { saved ->
+        updateValue(input, saved)
+        saved.modifiedDateTime = ZonedDateTime.now().toEpochSecond()
+        repository.save(saved)
+      }
+      .orElseThrow { NotFoundException("Record with id ${input.id} cannot be found") }
+
+
+  override fun delete(id: ObjectId) {
+    val personToBeDeleted = getById(id)
+    personToBeDeleted.deletedDateTime = ZonedDateTime.now().toEpochSecond()
+    personToBeDeleted.deletedFlag = true
+    repository.save(personToBeDeleted)
   }
 
-  override fun create(request: Mono<PersonCreateRequest>): Mono<Person> {
-    return request.flatMap { request ->
-      Mono.just(
-        repository.save(
-          Person(
-            UUID.randomUUID().toString(),
-            "P-" + request.type + "-001",
-            request.name,
-            request.email,
-            request.type,
-            request.address,
-            request.phone,
-            request.metadata
-          )
-        )
-      )
-    }
-      .map { entity -> entity }
-//    return request.map { r ->
-//      Person(
-//        UUID.randomUUID().toString(),
-//        "P-" + r.type + "-001",
-//        r.name,
-//        r.email,
-//        r.type,
-//        r.address,
-//        r.phone,
-//        r.metadata
-//      )
-//    }
+  override fun hardDelete(id: ObjectId) = repository.deleteById(id)
+
+  private fun updateValue(source: PersonUpdateInput, target: Person) {
+    target.name = source.name
+    target.email = source.email
+    target.address = source.address
+    target.phone = source.phone
+    target.metadata = source.metadata
   }
 
-
-  override fun update(request: Mono<PersonUpdateRequest>): Mono<Person> {
-    return request.map { r ->
-      Person(
-        UUID.randomUUID().toString(),
-        r.id,
-        r.name,
-        r.email,
-        r.type,
-        r.address,
-        r.phone,
-        r.metadata
-      )
-    }
-  }
-
-  override fun delete(request: Mono<String>): Mono<Person> {
-    return request.map { r ->
-      Person(
-        UUID.randomUUID().toString(),
-        r,
-        "deleted",
-        "delete@mail.id",
-        PersonType.ADMINISTRATOR,
-        HashMap(),
-        "123123",
-        HashMap()
-      )
+  private fun generatePersonId(person: Person): String {
+    val savedPerson = repository.findFirstByTypeOrderByCreatedDateTimeDesc(person.type)
+    return if (savedPerson.isPresent) {
+      val sequenceNumber = savedPerson.get().personId.substring(savedPerson.get().personId.length - 5)
+      person.type.v + "-" + String.format("%05d", (Integer.valueOf(sequenceNumber) + 1))
+    } else {
+      person.type.v + "-00001"
     }
   }
 }

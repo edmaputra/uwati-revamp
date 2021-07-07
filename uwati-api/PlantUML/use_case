@@ -1,0 +1,45 @@
+@startuml
+left to right direction
+
+actor super_user
+actor administrator
+actor doctor
+actor pharmacist
+actor cashier
+
+usecase "Read People" as r_people
+usecase "Create People" as c_people
+usecase "Update People" as u_people
+usecase "Delete People" as d_people
+
+usecase "Read Medicine" as r_med
+usecase "Create Medicine" as c_med
+usecase "Update Medicine" as u_med
+usecase "Delete Medicine" as d_med
+
+usecase "Read Medical Record" as r_mr
+usecase "Create Medical Record" as c_mr
+usecase "Update Medical Record" as u_mr
+usecase "Delete Medical Record" as d_mr
+
+usecase "Read Point of Sales" as c_sales
+usecase "Create Point of Sales" as c_sales
+usecase "Update Point of Sales" as u_sales
+usecase "Delete Point of Sales" as d_sales
+
+administrator --> r_people
+administrator --> c_people
+administrator --> u_people
+administrator --> d_people
+administrator --> r_med
+administrator --> c_med
+
+doctor --> r_mr
+doctor --> c_mr
+doctor --> u_mr
+
+cashier --> c_sales
+
+r_mr <-- super_user
+
+@enduml

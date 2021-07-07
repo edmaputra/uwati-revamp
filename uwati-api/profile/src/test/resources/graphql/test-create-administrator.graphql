@@ -1,0 +1,26 @@
+mutation {
+  create(
+    createInput: {
+      name: "Bangun",
+      email: "bangun@mail.go",
+      phone: "123456",
+      type: "Administrator",
+      address: [{key: "street", value: "cigending"}, {key: "town", value: "Bandung"}],
+      metadata: [{key: "k", value: "val"}],
+      username: "bangun.saputra"}
+  ) {
+    id,
+    personId,
+    name,
+    email,
+    type,
+    phone,
+    address {
+      key, value
+    },
+    metadata {
+      key, value
+    },
+    username
+  }
+}
