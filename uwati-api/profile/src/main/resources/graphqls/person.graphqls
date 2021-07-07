@@ -1,0 +1,60 @@
+type Person {
+  id: ID!,
+  personId: String,
+  name: String,
+  email: String,
+  type: String,
+  phone: String,
+  address: [Map],
+  metadata: [Map],
+  username: String
+}
+
+type Query {
+  persons: [Person]
+  personsPageable(page: Int = 0, size: Int = 20): [Person]
+}
+
+input PersonCreateInput {
+  name: String!,
+  email: String,
+  phone: String,
+  type: String,
+  address: [MapInput],
+  metadata: [MapInput],
+  username: String!
+}
+
+input PersonUpdateInput {
+  id: ID!,
+  name: String!,
+  email: String,
+  phone: String,
+  address: [MapInput],
+  metadata: [MapInput]
+}
+
+input PersonDeleteInput {
+  id: ID!,
+  hardDelete: Boolean
+}
+
+type Mutation {
+
+  create(createInput: PersonCreateInput) : Person
+
+  update(updateInput: PersonUpdateInput) : Person
+
+  delete(deleteInput: PersonDeleteInput) : String
+
+}
+
+type Map {
+  key: String!
+  value: String!
+}
+
+input MapInput {
+  key: String!
+  value: String!
+}

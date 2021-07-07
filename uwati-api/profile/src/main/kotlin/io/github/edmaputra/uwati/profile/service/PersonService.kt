@@ -1,21 +1,26 @@
 package io.github.edmaputra.uwati.profile.service
 
 import io.github.edmaputra.uwati.profile.entity.Person
-import io.github.edmaputra.uwati.profile.web.request.PersonCreateRequest
-import io.github.edmaputra.uwati.profile.web.request.PersonUpdateRequest
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
+import io.github.edmaputra.uwati.profile.input.PersonCreateInput
+import io.github.edmaputra.uwati.profile.input.PersonUpdateInput
+import org.bson.types.ObjectId
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 interface PersonService {
 
-  fun getAll(): Flux<Person>
+  fun findAll(): List<Person>
 
-  fun getById(request: Mono<String>): Mono<Person>
+  fun findAll(pageable: Pageable): Page<Person>
 
-  fun create(request: Mono<PersonCreateRequest>): Mono<Person>
+  fun getById(id: ObjectId): Person
 
-  fun update(request: Mono<PersonUpdateRequest>): Mono<Person>
+  fun create(input: PersonCreateInput): Person
 
-  fun delete(request: Mono<String>): Mono<Person>
+  fun update(input: PersonUpdateInput): Person
+
+  fun delete(id: ObjectId)
+
+  fun hardDelete(id: ObjectId)
 
 }

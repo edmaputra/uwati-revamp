@@ -1,23 +1,51 @@
 package io.github.edmaputra.uwati.profile.entity
 
-import io.github.edmaputra.uwati.profile.enum.PersonType
-import org.springframework.data.annotation.Id
+import io.github.edmaputra.uwati.profile.common.MapEntry
+import io.github.edmaputra.uwati.profile.enumeration.PersonType
+import org.bson.types.ObjectId
+import org.springframework.data.annotation.*
+import org.springframework.data.mongodb.core.index.Indexed
+import java.time.ZonedDateTime
 
 data class Person(
+
   @Id
-  val id: String,
+  var id: ObjectId,
 
-  val personId: String,
+  @Indexed(unique = true)
+  var personId: String,
 
-  val name: String,
+  var name: String,
 
-  val email: String,
+  @Indexed(unique = true)
+  var email: String,
 
-  val type: PersonType,
+  var phone: String,
 
-  val address: Map<String, Any>,
+  var type: PersonType = PersonType.CASHIER,
 
-  val phone: String,
+  var address: List<MapEntry>,
 
-  val metadata: Map<String, Any>
+  var metadata: List<MapEntry> = emptyList(),
+
+  @Indexed(unique = true)
+  val username: String,
+
+  @CreatedBy
+  var createdBy: String = "",
+
+  @CreatedDate
+  var createdDateTime: Long = ZonedDateTime.now().toEpochSecond(),
+
+  @LastModifiedBy
+  var modifiedBy: String = "",
+
+  @LastModifiedDate
+  var modifiedDateTime: Long = ZonedDateTime.now().toEpochSecond(),
+
+  var deletedBy: String = "",
+
+  var deletedDateTime: Long = 0,
+
+  var deletedFlag: Boolean = false
 )
