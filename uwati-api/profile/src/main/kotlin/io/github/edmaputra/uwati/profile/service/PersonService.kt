@@ -13,7 +13,7 @@ interface PersonService {
 
   fun findAll(): Flux<Person>
 
-  fun findAll(page: Int?, size: Int?, search: String?): Flux<Person>
+  fun findAll(page: Int = 0, size: Int = 20, sort: String = "id", ascending: Boolean, search: String?): Flux<Person>
 //
   fun getById(id: String): Mono<Person>
 //

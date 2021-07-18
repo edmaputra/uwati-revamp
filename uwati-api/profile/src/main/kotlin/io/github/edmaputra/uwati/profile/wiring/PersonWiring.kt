@@ -2,7 +2,6 @@ package io.github.edmaputra.uwati.profile.wiring
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.schema.idl.RuntimeWiring
-import io.github.edmaputra.uwati.profile.input.PersonCreateInput
 import io.github.edmaputra.uwati.profile.service.PersonService
 import org.springframework.graphql.boot.RuntimeWiringBuilderCustomizer
 import org.springframework.stereotype.Component
@@ -14,13 +13,14 @@ class PersonWiring(
 ) : RuntimeWiringBuilderCustomizer {
 
   override fun customize(builder: RuntimeWiring.Builder) {
-    builder.type("Query") { wiring -> wiring.dataFetcher("persons") { this.personService.findAll() } }
     builder.type("Query") { wiring -> wiring.dataFetcher("person") { env -> this.personService.getById(env.getArgument("id")) } }
     builder.type("Query") { wiring ->
-      wiring.dataFetcher("personsPageable") { env ->
+      wiring.dataFetcher("persons") { env ->
         this.personService.findAll(
           env.getArgument("page"),
           env.getArgument("size"),
+          env.getArgument("sort"),
+          env.getArgument("asc"),
           env.getArgument("search")
         )
       }

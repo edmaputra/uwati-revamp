@@ -4,9 +4,10 @@ import io.github.edmaputra.uwati.profile.entity.Person
 import io.github.edmaputra.uwati.profile.input.PersonCreateInput
 import io.github.edmaputra.uwati.profile.repository.PersonRepository
 import io.github.edmaputra.uwati.profile.service.PersonService
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
-import org.springframework.data.mongodb.core.query.CriteriaDefinition
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
@@ -20,8 +21,8 @@ class PersonServiceImpl(
 
   override fun findAll(): Flux<Person> = repository.findAll()
 
-  override fun findAll(page: Int?, size: Int?, search: String?): Flux<Person> =
-    template.find(Query.query(createCriteriaDefinition(search)), Person::class.java)
+  override fun findAll(page: Int, size: Int, sort: String, ascending: Boolean, search: String?): Flux<Person> =
+    template.find(createQuery(page, size, sort, ascending, search), Person::class.java)
 
   override fun getById(id: String): Mono<Person> = repository.findById(id)
 
@@ -30,9 +31,19 @@ class PersonServiceImpl(
     repository.save(person);
   }
 
-  fun createCriteriaDefinition(search: String?): CriteriaDefinition =
-    Criteria.where("name").regex(".*$search.*", "i")
-  
+  fun createQuery(page: Int = 0, size: Int = 20, sort: String = "id", ascending: Boolean, search: String?): Query {
+    val query =
+      Query().with(PageRequest.of(page, size, if (ascending) Sort.Direction.ASC else Sort.Direction.DESC, sort))
+
+    if (search != null && search.isNotEmpty()) {
+      query.addCriteria(
+        Criteria.where("name").regex(".*$search.*", "i")
+      )
+    }
+
+    return query
+  }
+
 
   //
 //  override fun update(input: PersonUpdateInput): Person =
