@@ -2,7 +2,7 @@ spring:
   application:
     name: uwati-profile
   profiles:
-    active: dev
+    active: ${PROFILE:prod}
   config:
     import: "optional:configserver:http://localhost:10000"
 
@@ -10,7 +10,11 @@ server:
   port: ${PROFILE_PORT:10010}
 
 graphql:
-  servlet:
-    exception-handlers-enabled: true
+#  servlet:
+#    exception-handlers-enabled: true
   tools:
     schema-location-pattern: "**/graphqls/*.graphqls"
+
+logging:
+  level:
+    root: DEBUG

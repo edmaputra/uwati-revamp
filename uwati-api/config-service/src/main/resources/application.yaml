@@ -5,4 +5,9 @@ spring:
   application:
     name: uwati-config
   profiles:
-    active: ${PROFILE:dev}
+    active: ${PROFILE:prod}
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: false

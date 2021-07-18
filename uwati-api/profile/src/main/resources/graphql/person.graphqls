@@ -1,25 +1,38 @@
+type Auditable {
+  createdBy: String
+  createdDateTime: String
+  modifiedBy: String
+  modifiedDateTime: String
+  deleted: Boolean
+  deletedBy: String
+  deletedDateTime: String
+}
+
 type Person {
   id: ID!,
   personId: String,
   name: String,
   email: String,
-  type: String,
+  type: PersonType,
   phone: String,
   address: [Map],
   metadata: [Map],
   username: String
+  audit: Auditable
 }
 
 type Query {
   persons: [Person]
-  personsPageable(page: Int = 0, size: Int = 20): [Person]
+  personsPageable(page: Int = 0, size: Int = 20, search: String): [Person]
+
+  person(id: String): Person
 }
 
 input PersonCreateInput {
   name: String!,
   email: String,
   phone: String,
-  type: String,
+  type: PersonType,
   address: [MapInput],
   metadata: [MapInput],
   username: String!
@@ -41,11 +54,11 @@ input PersonDeleteInput {
 
 type Mutation {
 
-  create(createInput: PersonCreateInput) : Person
+  create(input: PersonCreateInput): Person
 
   update(updateInput: PersonUpdateInput) : Person
 
-  delete(deleteInput: PersonDeleteInput) : String
+  delete(request: PersonDeleteInput) : String
 
 }
 
@@ -58,3 +71,12 @@ input MapInput {
   key: String!
   value: String!
 }
+
+enum PersonType {
+  ADMINISTRATOR
+  CASHIER
+  DOCTOR
+  SUPERUSER
+  PHARMACIST
+}
+

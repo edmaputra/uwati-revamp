@@ -6,21 +6,23 @@ import io.github.edmaputra.uwati.profile.input.PersonUpdateInput
 import org.bson.types.ObjectId
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 interface PersonService {
 
-  fun findAll(): List<Person>
+  fun findAll(): Flux<Person>
 
-  fun findAll(pageable: Pageable): Page<Person>
+  fun findAll(page: Int?, size: Int?, search: String?): Flux<Person>
+//
+  fun getById(id: String): Mono<Person>
+//
+  fun create(input: PersonCreateInput)
+//
+//  fun update(input: PersonUpdateInput): Person
+//
+  fun delete(id: String)
 
-  fun getById(id: ObjectId): Person
-
-  fun create(input: PersonCreateInput): Person
-
-  fun update(input: PersonUpdateInput): Person
-
-  fun delete(id: ObjectId)
-
-  fun hardDelete(id: ObjectId)
+  fun hardDelete(id: String)
 
 }

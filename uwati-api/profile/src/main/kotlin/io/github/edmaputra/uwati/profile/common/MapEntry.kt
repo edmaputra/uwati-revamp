@@ -4,6 +4,6 @@ data class MapEntry(
 
   var key: String,
 
-  var value: Any
+  var value: String
 
 )

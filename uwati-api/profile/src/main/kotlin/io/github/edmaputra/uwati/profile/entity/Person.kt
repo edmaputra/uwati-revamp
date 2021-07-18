@@ -1,16 +1,19 @@
 package io.github.edmaputra.uwati.profile.entity
 
+import io.github.edmaputra.uwati.profile.common.Auditable
 import io.github.edmaputra.uwati.profile.common.MapEntry
 import io.github.edmaputra.uwati.profile.enumeration.PersonType
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.*
 import org.springframework.data.mongodb.core.index.Indexed
+import org.springframework.data.mongodb.core.mapping.Document
 import java.time.ZonedDateTime
 
-data class Person(
+@Document
+open class Person(
 
   @Id
-  var id: ObjectId,
+  var id: String,
 
   @Indexed(unique = true)
   var personId: String,
@@ -29,23 +32,6 @@ data class Person(
   var metadata: List<MapEntry> = emptyList(),
 
   @Indexed(unique = true)
-  val username: String,
+  val username: String
 
-  @CreatedBy
-  var createdBy: String = "",
-
-  @CreatedDate
-  var createdDateTime: Long = ZonedDateTime.now().toEpochSecond(),
-
-  @LastModifiedBy
-  var modifiedBy: String = "",
-
-  @LastModifiedDate
-  var modifiedDateTime: Long = ZonedDateTime.now().toEpochSecond(),
-
-  var deletedBy: String = "",
-
-  var deletedDateTime: Long = 0,
-
-  var deletedFlag: Boolean = false
-)
+) : Auditable()
